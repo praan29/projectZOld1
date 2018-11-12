@@ -58,7 +58,7 @@ render(){
 				</View>
 
 				<View style={styles.chartSection}>
-          				<PureChart data={sampleData} radius={100} type='pie' accessorKey="value"/>
+          				<PureChart data={sampleData} radius={250} type='pie' accessorKey="value"/>
           		</View>
 			</View>
 		);	
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   	justifyContent:'flex-start',
     margin: 10,
     fontSize: 24,
-    fontWeight:'300',
+    
     fontFamily: 'Roboto',
 	letterSpacing: 0.8,
   },
