@@ -9,6 +9,7 @@ import {
 	StyleSheet,
 } from 'react-native';
 
+import fireConection from '../connection/fire';
 
 import { Button,Icon } from 'react-native-elements';
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -26,7 +27,7 @@ class FloatingLabel extends Component{
 	
 	handleFocus = () =>this.setState( { isFocused:true });
 	handleBlur = () =>this.setState( { isFocused: false });
-	
+
 	render(){
 		const { label, ...props }=this.props;
 		const { isFocused } = this.state;
@@ -44,7 +45,7 @@ class FloatingLabel extends Component{
 				</Text>
 				<TextInput
 					{...props}
-					style={styles.inputText}
+					style={styles.input}
 					onBlur={this.handleBlur}
 					onFocus={this.handleFocus}
 				/>
@@ -65,6 +66,7 @@ constructor(props){
 		userName:"",
 		fPassword:"",
 		cPassword:"",
+		clientId:1,
 	};
 }	
 
@@ -82,13 +84,37 @@ radio_props = {
 		},
    ],
 };
+
 onPress = data => this.setState({ data });
-handleSubmitAction = ()=>{
-	this.props.navigation.navigate('HomeButtonNav');
+
+handleSubmit = () => {
+	let collection = {}
+	collection.fname1 = this.state.firstName,
+	collection.lname = this.state.lastName,
+	collection.email = this.state.emailAddress,
+	collection.phone = this.state.phoneNumber,
+	collection.uname = this.state.userName,
+	collection.fpwd = this.state.fPassword,
+	collection.cpwd = this.state.cPassword,
+		fireConection.database().ref('users/003').set(
+		{
+		  collection
+		}).then(() => {
+			console.log("Record Created");
+			this.props.navigation.navigate('HomeButtonNav');
+		}).catch((error) => {
+			console.log("Insert execption : "+error);
+		});
+	
 }
-handleCancelAction =()=>{
+
+handleCancel = () => {
 	this.props.navigation.navigate('LandingView');
 }
+
+componentWillMount(){
+	 }
+
 firstNameChangeEvent=(fname)=>this.setState({firstName:fname});
 lastNameChangeEvent=(lname)=>this.setState({lastName:lname});
 emailAddressChangeEvent=(email)=>this.setState({emailAddress:email});
@@ -153,7 +179,7 @@ cPasswordChangeEvent=(cpwd)=>this.setState({cPassword:cpwd});
 						fontSize={20}
 						fontFamily='Roboto'
 						buttonStyle={styles.submitButton}
-						onPress={this.handleSubmitAction}
+						onPress={this.handleSubmit}
 					/>
 					<Button
 						title='X'
@@ -161,7 +187,7 @@ cPasswordChangeEvent=(cpwd)=>this.setState({cPassword:cpwd});
 						fontSize={20}
 						fontFamily='Roboto'
 						buttonStyle={styles.cancelButton}
-						onPress={this.handleCancelAction}
+						onPress={this.handleCancel}
 					/>
 				</View>
 			</View>
@@ -182,7 +208,7 @@ const styles = StyleSheet.create({
 		// height:11,
 		// margin:10,
 	},
-	inputText:{
+	input:{
 		height:45,
 		// width:315,
 		fontSize : 18,
@@ -248,7 +274,7 @@ const styles = StyleSheet.create({
 // <View style={styles.inputWrapper}>	
 						// 	<TextInput
 						// 		value={this.state.lastName}
-						// 		style={styles.inputText}
+						// 		style={styles.input}
 						// 		placeholder="last name"
 						// 		onChangeText={this.lastNameChangeEvent}
 						// 		placeholderTextColor="#234876"
@@ -259,3 +285,13 @@ const styles = StyleSheet.create({
 						// 	<Text style={styles.genderLabel}>Gender</Text>
 						// 	<RadioGroup radioButtons={this.radio_props.data} onPress={this.onPress} flexDirection='row' />
 						// </View>
+
+
+
+						// userId = () => {
+// 	var string = ""+num;
+// 	var pad = "0000";
+// 	var n = pad.substring(0,pad.length - string.length)+string;
+// 	num++;
+// 	console.log("cli : "+this.state.clientId);
+// }
