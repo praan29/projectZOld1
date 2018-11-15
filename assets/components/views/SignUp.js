@@ -20,34 +20,32 @@ class FloatingLabel extends Component{
 
 	constructor(props){
 		super(props);
-		this.state={
-			isFocused :false,
-		};
+		// this.state={
+		// 	isFocused :false,
+		// };
 	}
 	
-	handleFocus = () =>this.setState( { isFocused:true });
-	handleBlur = () =>this.setState( { isFocused: false });
+	// handleFocus = () =>this.setState( { isFocused:true });
+	// handleBlur = () =>this.setState( { isFocused: false });
 
 	render(){
 		const { label, ...props }=this.props;
-		const { isFocused } = this.state;
-		const labelStyle={
-			marginStart : 25,
-			position:'absolute',
-			top: !isFocused ? 15 : 0,
-			fontSize : !isFocused ? 20 : 14,
-			color:!isFocused ? '#aaa': '#000',
-		};
+		// const { isFocused } = this.state;
+		// const labelStyle={
+		// 	marginStart : 25,
+		// 	position:'absolute',
+		// 	top: !isFocused ? 15 : 0,
+		// 	fontSize : !isFocused ? 20 : 14,
+		// 	color:!isFocused ? '#aaa': '#000',
+		// };
 		return(
 			<View style={{padding:18}}>
-				<Text style={labelStyle}>
+				<Text>
 					{label} 
 				</Text>
 				<TextInput
 					{...props}
 					style={styles.input}
-					onBlur={this.handleBlur}
-					onFocus={this.handleFocus}
 				/>
 			</View>
 		)
@@ -96,6 +94,7 @@ handleSubmit = () => {
 	collection.uname = this.state.userName,
 	collection.fpwd = this.state.fPassword,
 	collection.cpwd = this.state.cPassword,
+
 		fireConection.database().ref('users/003').set(
 		{
 		  collection
@@ -105,15 +104,12 @@ handleSubmit = () => {
 		}).catch((error) => {
 			console.log("Insert execption : "+error);
 		});
-	
+
 }
 
 handleCancel = () => {
 	this.props.navigation.navigate('LandingView');
 }
-
-componentWillMount(){
-	 }
 
 firstNameChangeEvent=(fname)=>this.setState({firstName:fname});
 lastNameChangeEvent=(lname)=>this.setState({lastName:lname});
@@ -129,12 +125,14 @@ cPasswordChangeEvent=(cpwd)=>this.setState({cPassword:cpwd});
 				<ScrollView style={styles.scrollViewWrapper}>
 					<KeyboardAvoidingView behavior= 'padding'>
 						<FloatingLabel
-							label="FirstName"
+							// label="FirstName"
+							placeholder="firstname"
 							value={this.state.firstName}
 							onChangeText={this.firstNameChangeEvent}
 						/>
 						<FloatingLabel
-							label="LastName"
+							// label="LastName"
+							placeholder="lastname"
 							value={this.state.lastName}
 							onChangeText={this.lastNameChangeEvent}
 						/>
@@ -143,29 +141,34 @@ cPasswordChangeEvent=(cpwd)=>this.setState({cPassword:cpwd});
 							<RadioGroup radioButtons={this.radio_props.data} onPress={this.onPress} flexDirection='row' />
 						</View>
 						<FloatingLabel
-							label="Email Address"
+							// label="Email Address"
+							placeholder="emailAddress"
 							value={this.state.emailAddress}
 							onChangeText={this.emailAddressChangeEvent}
 						/>
 						<FloatingLabel
-							label="PhoneNumber"
+							// label="PhoneNumber"
+							placeholder="phoneNumber"
 							value={this.state.phoneNumber}
 							onChangeText={this.phoneNumberChangeEvent}
 						/>
 						<FloatingLabel
-							label="Username"
+							// label="Username"
+							placeholder="username"
 							value={this.state.userName}
 							onChangeText={this.userNameChangeEvent}
 						/>
 						<FloatingLabel
-							label="Password"
+							// label="Password"
 							secureTextEntry
+							placeholder="password"
 							value={this.state.fPassword}
 							onChangeText={this.fPasswordChangeEvent}
 						/>
 						<FloatingLabel
-							label="Confirm Password"
+							// label="Confirm Password"
 							secureTextEntry
+							placeholder="confirm password"
 							value={this.state.cPassword}
 							onChangeText={this.cPasswordChangeEvent}
 						/>
@@ -295,3 +298,14 @@ const styles = StyleSheet.create({
 // 	num++;
 // 	console.log("cli : "+this.state.clientId);
 // }
+
+
+// <Text>
+	// {label} 
+// </Text>
+// <TextInput
+// 	{...props}
+// 	style={styles.input}
+// 	onBlur={this.handleBlur}
+// 	onFocus={this.handleFocus}
+// />
